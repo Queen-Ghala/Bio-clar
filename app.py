@@ -1,23 +1,24 @@
 import streamlit as st
-from PyPDF2 import PdfReader
+import PyPDF2
+import google.generativeai as genai
 
-st.title("BioClar - تبسيط الأحياء")
+# ضعي مفتاحكِ السري مكان الكلمة الموجودة بين القوسين
+api_key = "AQ.Ab8RN6JhMEhVqcUPTcJtL1QQMAmacRuL9tFg1SWd2F-ZjLOT3Q"
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
-uploaded_file = st.file_uploader("ارفع ملف دروسك (PDF) هنا", type=['pdf'])
+st.title("BioClar - مساعد الأحياء الذكي 🧬")
 
-def get_text_from_pdf(pdf_file):
-    reader = PdfReader(pdf_file)
+uploaded_file = st.file_uploader("ارفعي ملف PDF للدرس", type="pdf")
+
+if uploaded_file:
+    reader = PyPDF2.PdfReader(uploaded_file)
     text = ""
     for page in reader.pages:
         text += page.extract_text()
-    return text
-
-if uploaded_file is not None:
-    st.write("جاري تحليل ملفك...")
-    file_text = get_text_from_pdf(uploaded_file)
     
-    # هنا سنعرض ملخصاً بسيطاً (كمثال)
-    st.subheader("الملخص المقترح:")
-    st.write("هذا الملف يحتوي على: " + file_text[:500] + "... (هذا عرض سريع للنص)")
-    
-    st.success("تم استخراج النص بنجاح! الخطوة القادمة هي الربط مع محرك ذكاء اصطناعي للتلخيص.")
+    if st.button("تلخيص الدرس بذكاء"):
+        with st.spinner("جاري التفكير والتلخيص..."):
+            prompt = f"لخصي هذا النص الخاص بمادة الأحياء بأسلوب مبسط للطالبات، وقسميه لفقرات، وفي نهاية كل فقرة ضعي سؤالاً تفاعلياً واحداً. النص هو: {text}"
+            response = model.generate_content(prompt)
+            st.write(response.text)
