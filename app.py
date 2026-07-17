@@ -3,7 +3,7 @@ import PyPDF2
 import google.generativeai as genai
 
 # ضعي مفتاحك هنا بين علامتي التنصيص
-api_key = "الصقي_المفتاح_هنا"
+api_key ="AQ.Ab8RN6JWoshFAQAOyGv6t20nH-26urptyy_ULCzJ2hebpZ5bIg"
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
