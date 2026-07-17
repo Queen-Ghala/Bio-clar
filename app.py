@@ -3,9 +3,11 @@ import PyPDF2
 import google.generativeai as genai
 
 # ضعي مفتاحكِ السري مكان الكلمة الموجودة بين القوسين
-api_key = "AQ.Ab8RN6JhMEhVqcUPTcJtL1QQMAmacRuL9tFg1SWd2F-ZjLOT3Q"
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-1.5-flash')
+apiimport os
+os.environ["GOOGLE_API_KEY"] = "AQ.Ab8RN6JhMEhVqcUPTcJtL1QQMAmacRuL9tFg1SWd2F-ZjLOT3Q"
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+
+model
 
 st.title("BioClar - مساعد الأحياء الذكي 🧬")
 
