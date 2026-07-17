@@ -1,10 +1,9 @@
 import streamlit as st
 import PyPDF2
 import google.generativeai as genai
-import os
 
-os.environ["GOOGLE_API_KEY"] = "AQ.Ab8RN6JhMEhVqcUPTcJtL1QQMAmacRuL9tFg1SWd2F-ZjLOT3Q"
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+# إعداد المكتبة
+genai.configure(api_key=st.secrets["API_KEY"])
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 st.title("BioClar - مساعد الأحياء الذكي 🧬")
